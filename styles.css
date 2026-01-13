@@ -98,10 +98,15 @@ a:hover { opacity: 0.9; }
 }
 
 .nav__mobile {
-  display: grid;
+  display: none;
   gap: 8px;
   padding: 12px 0 18px;
 }
+
+.nav__mobile[hidden] {
+  display: none !important;
+}
+
 .nav__mobile a {
   padding: 10px 12px;
   border: 1px solid rgba(255,255,255,0.06);
@@ -426,4 +431,9 @@ textarea { resize: vertical; }
   .cta { grid-template-columns: 1fr; }
   .nav__links { display: none; }
   .nav__menu { display: inline-flex; }
+    .nav__mobile {
+    display: grid;
+  }
+
 }
+
