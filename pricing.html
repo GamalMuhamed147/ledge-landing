@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ledge UAE — Pricing</title>
+    <meta
+      name="description"
+      content="Choose a plan that fits your needs. Pricing for Ledge UAE accounting-first ERP."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="./app.js"></script>
+  </head>
+
+  <body>
+    <!-- Top nav (same as your index.html) -->
+    <header class="nav">
+      <div class="container nav__inner">
+        <a class="brand" href="./index.html#top" aria-label="Ledge UAE Home">
+          <span class="brand__mark">L</span>
+          <span class="brand__name">Ledge UAE</span>
+        </a>
+
+        <nav class="nav__links" aria-label="Primary">
+          <a href="./index.html#modules">Modules</a>
+          <a href="./index.html#who">Who it’s for</a>
+          <a href="./index.html#how">How it works</a>
+          <a href="./pricing.html" aria-current="page">Pricing</a>
+          <a href="./index.html#contact">Request demo</a>
+        </nav>
+
+        <button class="nav__menu" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+          Menu
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div class="container nav__mobile" id="mobileMenu" hidden>
+        <a href="./index.html#modules">Modules</a>
+        <a href="./index.html#who">Who it’s for</a>
+        <a href="./index.html#how">How it works</a>
+        <a href="./pricing.html">Pricing</a>
+        <a href="./index.html#contact">Request demo</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="pricingHero">
+        <div class="container pricingHero__inner">
+          <div class="pricingHero__top">
+            <span class="pill">Pricing</span>
+            <h1>Choose the plan that fits<br />your needs.</h1>
+          </div>
+
+          <div class="pricingGrid">
+            <!-- Basic -->
+            <article class="priceCard" data-plan="basic">
+              <div class="priceCard__head">
+                <span class="chip">Basic</span>
+                <div class="price">
+                  <span class="price__value">$20</span>
+                  <span class="price__unit">Per Month</span>
+                </div>
+                <div class="priceCard__meta">
+                  <div class="muted small">1 User</div>
+                  <div class="muted small">Plus access for your accountant</div>
+                </div>
+              </div>
+
+              <div class="priceCard__spacer"></div>
+
+              <div class="priceCard__actions">
+                <a class="btn btn--primary btn--wide" href="./index.html#contact">Select Plan</a>
+
+                <button class="detailsToggle" type="button" aria-expanded="false" data-toggle="basic">
+                  <span class="detailsToggle__icon">–</span>
+                  <span class="detailsToggle__text">Expand Plan Details</span>
+                </button>
+
+                <div class="details" id="details-basic" hidden>
+                  <ul class="details__list">
+                    <li>Company setup + COA seeding</li>
+                    <li>Journal entries (draft/post)</li>
+                    <li>Basic ledger view</li>
+                    <li>Email support</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- Standard (highlight) -->
+            <article class="priceCard priceCard--featured" data-plan="standard">
+              <div class="priceCard__head">
+                <span class="chip">Standard</span>
+                <div class="price">
+                  <span class="price__value">$40</span>
+                  <span class="price__unit">Per Month</span>
+                </div>
+                <div class="priceCard__meta">
+                  <div class="muted small">3 Users</div>
+                  <div class="muted small">Plus access for your accountant</div>
+                </div>
+              </div>
+
+              <div class="priceCard__spacer"></div>
+
+              <div class="priceCard__actions">
+                <a class="btn btn--primary btn--wide" href="./index.html#contact">Select Plan</a>
+
+                <button class="detailsToggle" type="button" aria-expanded="false" data-toggle="standard">
+                  <span class="detailsToggle__icon">–</span>
+                  <span class="detailsToggle__text">Expand Plan Details</span>
+                </button>
+
+                <div class="details" id="details-standard" hidden>
+                  <ul class="details__list">
+                    <li>Everything in Basic</li>
+                    <li>Period control & locking</li>
+                    <li>Roles & permissions</li>
+                    <li>Priority support</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- Advanced -->
+            <article class="priceCard" data-plan="advanced">
+              <div class="priceCard__head">
+                <span class="chip">Advanced</span>
+                <div class="price">
+                  <span class="price__value">$60</span>
+                  <span class="price__unit">Per Month</span>
+                </div>
+                <div class="priceCard__meta">
+                  <div class="muted small">5 Users</div>
+                  <div class="muted small">Plus access for your accountant</div>
+                </div>
+              </div>
+
+              <div class="priceCard__spacer"></div>
+
+              <div class="priceCard__actions">
+                <a class="btn btn--primary btn--wide" href="./index.html#contact">Select Plan</a>
+
+                <button class="detailsToggle" type="button" aria-expanded="false" data-toggle="advanced">
+                  <span class="detailsToggle__icon">–</span>
+                  <span class="detailsToggle__text">Expand Plan Details</span>
+                </button>
+
+                <div class="details" id="details-advanced" hidden>
+                  <ul class="details__list">
+                    <li>Everything in Standard</li>
+                    <li>Real Estate module enabled</li>
+                    <li>PDC cheques tracking</li>
+                    <li>Exports (CSV/Excel) when available</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <p class="pricingFoot muted small">
+            Pricing is indicative for early access. Final tiers may change based on modules and usage.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div>
+          <div class="brand brand--footer">
+            <span class="brand__mark">L</span>
+            <span class="brand__name">Ledge UAE</span>
+          </div>
+          <p class="small muted">Accounting-first ERP for UAE businesses.</p>
+        </div>
+
+        <div class="footer__links">
+          <a href="./index.html#modules">Modules</a>
+          <a href="./pricing.html">Pricing</a>
+          <a href="./index.html#contact">Request demo</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
