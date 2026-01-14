@@ -60,9 +60,10 @@ if (form && out) {
       const text = btn.querySelector(".detailsToggle__text");
       const icon = btn.querySelector(".detailsToggle__icon");
       if (text) text.textContent = isOpen ? "Expand Plan Details" : "Collapse Plan Details";
-      if (icon) icon.textContent = isOpen ? "–" : "–"; // keep same visual like your screenshot
+      if (icon) icon.textContent = isOpen ? "+" : "–"; // keep same visual like your screenshot
     });
   });
 })();
+
 
 
