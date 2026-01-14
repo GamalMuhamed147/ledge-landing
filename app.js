@@ -40,3 +40,29 @@ if (form && out) {
     form.reset();
   });
 }
+// ===============================
+// Pricing: Expand/Collapse details
+// ===============================
+(function pricingDetails() {
+  const toggles = document.querySelectorAll("[data-toggle]");
+  if (!toggles.length) return;
+
+  toggles.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const key = btn.getAttribute("data-toggle");
+      const panel = document.getElementById(`details-${key}`);
+      if (!panel) return;
+
+      const isOpen = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!isOpen));
+      panel.hidden = isOpen;
+
+      const text = btn.querySelector(".detailsToggle__text");
+      const icon = btn.querySelector(".detailsToggle__icon");
+      if (text) text.textContent = isOpen ? "Expand Plan Details" : "Collapse Plan Details";
+      if (icon) icon.textContent = isOpen ? "–" : "–"; // keep same visual like your screenshot
+    });
+  });
+})();
+
+
