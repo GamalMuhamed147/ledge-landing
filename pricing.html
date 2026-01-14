@@ -6,14 +6,79 @@
     <title>Ledge UAE — Pricing</title>
     <meta
       name="description"
-      content="Choose a plan that fits your needs. Pricing for Ledge UAE accounting-first ERP."
+      content="Choose the plan that fits your needs. Pricing for Ledge UAE accounting-first ERP."
     />
     <link rel="stylesheet" href="./styles.css" />
     <script defer src="./app.js"></script>
+
+    <!-- Page-only tweaks (keeps your global styles intact) -->
+    <style>
+      .pricingHero__top h1 { max-width: 22ch; margin-left: auto; margin-right: auto; }
+
+      /* 2 cards only */
+      .pricingGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+      @media (max-width: 980px) {
+        .pricingGrid { grid-template-columns: 1fr; }
+      }
+
+      /* Make the cards look closer to the screenshot: taller, more glassy */
+      .priceCard {
+        min-height: 520px;
+        padding: 18px;
+      }
+
+      /* Features list inside the card */
+      .featureList {
+        list-style: none;
+        padding: 0;
+        margin: 14px 0 0;
+        display: grid;
+        gap: 10px;
+      }
+      .featureItem {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 10px 10px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .check {
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(110, 168, 255, 0.35);
+        background: rgba(110, 168, 255, 0.14);
+        color: rgba(233, 238, 252, 0.95);
+        flex: 0 0 22px;
+        margin-top: 1px;
+      }
+      .featureText {
+        color: rgba(233, 238, 252, 0.78);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      /* Slightly softer button like screenshot */
+      .btn--wide {
+        border-radius: 12px;
+        padding: 12px 14px;
+      }
+
+      /* Details area spacing */
+      .details { margin-top: 2px; }
+      .details__list { padding-left: 18px; line-height: 1.8; }
+    </style>
   </head>
 
   <body>
-    <!-- Top nav (same as your index.html) -->
+    <!-- Top nav -->
     <header class="nav">
       <div class="container nav__inner">
         <a class="brand" href="./index.html#top" aria-label="Ledge UAE Home">
@@ -49,7 +114,7 @@
         <div class="container pricingHero__inner">
           <div class="pricingHero__top">
             <span class="pill">Pricing</span>
-            <h1>Choose the plan that fits<br />your needs.</h1>
+            <h1>Choose the plan that fits your needs.</h1>
           </div>
 
           <div class="pricingGrid">
@@ -57,14 +122,36 @@
             <article class="priceCard" data-plan="basic">
               <div class="priceCard__head">
                 <span class="chip">Basic</span>
+
                 <div class="price">
                   <span class="price__value">$20</span>
                   <span class="price__unit">Per Month</span>
                 </div>
+
                 <div class="priceCard__meta">
                   <div class="muted small">1 User</div>
                   <div class="muted small">Plus access for your accountant</div>
                 </div>
+
+                <!-- Features list (like screenshot) -->
+                <ul class="featureList" aria-label="Basic features">
+                  <li class="featureItem">
+                    <span class="check">✓</span>
+                    <span class="featureText">Chart of Accounts (header vs posting) + validated structure</span>
+                  </li>
+                  <li class="featureItem">
+                    <span class="check">✓</span>
+                    <span class="featureText">Journal entries (draft → post) with audit trail basics</span>
+                  </li>
+                  <li class="featureItem">
+                    <span class="check">✓</span>
+                    <span class="featureText">General ledger view + account history</span>
+                  </li>
+                  <li class="featureItem">
+                    <span class="check">✓</span>
+                    <span class="featureText">Email support + onboarding checklist</span>
+                  </li>
+                </ul>
               </div>
 
               <div class="priceCard__spacer"></div>
@@ -79,27 +166,49 @@
 
                 <div class="details" id="details-basic" hidden>
                   <ul class="details__list">
-                    <li>Company setup + COA seeding</li>
-                    <li>Journal entries (draft/post)</li>
-                    <li>Basic ledger view</li>
-                    <li>Email support</li>
+                    <li>Single company setup</li>
+                    <li>Core accounting module access</li>
+                    <li>Basic roles (admin/user)</li>
+                    <li>Roadmap access (early features)</li>
                   </ul>
                 </div>
               </div>
             </article>
 
-            <!-- Standard (highlight) -->
+            <!-- Standard -->
             <article class="priceCard priceCard--featured" data-plan="standard">
               <div class="priceCard__head">
                 <span class="chip">Standard</span>
+
                 <div class="price">
                   <span class="price__value">$40</span>
                   <span class="price__unit">Per Month</span>
                 </div>
+
                 <div class="priceCard__meta">
                   <div class="muted small">3 Users</div>
                   <div class="muted small">Plus access for your accountant</div>
                 </div>
+
+                <!-- Features list -->
+                <ul class="featureList" aria-label="Standard features">
+                  <li class="featureItem">
+                    <span class="check">✓</span>
+                    <span class="featureText">Everything in Basic</span>
+                  </li>
+                  <li class="featureItem">
+                    <span class="check">✓</span>
+                    <span class="featureText">Period management + locking (audit-ready workflow)</span>
+                  </li>
+                  <li class="featureItem">
+                    <span class="check">✓</span>
+                    <span class="featureText">Roles & permissions (admin / staff / collector-ready)</span>
+                  </li>
+                  <li class="featureItem">
+                    <span class="check">✓</span>
+                    <span class="featureText">Priority support + setup assistance</span>
+                  </li>
+                </ul>
               </div>
 
               <div class="priceCard__spacer"></div>
@@ -114,45 +223,10 @@
 
                 <div class="details" id="details-standard" hidden>
                   <ul class="details__list">
-                    <li>Everything in Basic</li>
-                    <li>Period control & locking</li>
-                    <li>Roles & permissions</li>
-                    <li>Priority support</li>
-                  </ul>
-                </div>
-              </div>
-            </article>
-
-            <!-- Advanced -->
-            <article class="priceCard" data-plan="advanced">
-              <div class="priceCard__head">
-                <span class="chip">Advanced</span>
-                <div class="price">
-                  <span class="price__value">$60</span>
-                  <span class="price__unit">Per Month</span>
-                </div>
-                <div class="priceCard__meta">
-                  <div class="muted small">5 Users</div>
-                  <div class="muted small">Plus access for your accountant</div>
-                </div>
-              </div>
-
-              <div class="priceCard__spacer"></div>
-
-              <div class="priceCard__actions">
-                <a class="btn btn--primary btn--wide" href="./index.html#contact">Select Plan</a>
-
-                <button class="detailsToggle" type="button" aria-expanded="false" data-toggle="advanced">
-                  <span class="detailsToggle__icon">–</span>
-                  <span class="detailsToggle__text">Expand Plan Details</span>
-                </button>
-
-                <div class="details" id="details-advanced" hidden>
-                  <ul class="details__list">
-                    <li>Everything in Standard</li>
-                    <li>Real Estate module enabled</li>
-                    <li>PDC cheques tracking</li>
-                    <li>Exports (CSV/Excel) when available</li>
+                    <li>Multi-company ready structure (when enabled)</li>
+                    <li>Advanced validations for COA + journals</li>
+                    <li>Reporting pack priority (Trial Balance / P&L / Balance Sheet)</li>
+                    <li>Real Estate module add-on available</li>
                   </ul>
                 </div>
               </div>
