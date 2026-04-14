@@ -2,66 +2,595 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ledge UAE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ledge UAE | Business Systems & Operations Software</title>
+  <meta
+    name="description"
+    content="Ledge UAE helps businesses manage operations, finance, property workflows, and internal systems with modern software built for the UAE."
+  />
 
   <style>
+    :root {
+      --bg: #020617;
+      --bg-soft: #0f172a;
+      --card: rgba(15, 23, 42, 0.72);
+      --card-border: rgba(148, 163, 184, 0.14);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-strong: #0ea5e9;
+      --success: #22c55e;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius: 24px;
+      --max-width: 1180px;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      height: 100vh;
-      background: linear-gradient(135deg, #0f172a, #020617);
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.15), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.10), transparent 24%),
+        linear-gradient(135deg, #020617 0%, #0b1120 50%, #020617 100%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.55;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .wrapper {
+      width: 100%;
+      padding: 24px;
+    }
+
+    .nav,
+    .hero,
+    .section,
+    .footer {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .nav {
       display: flex;
       align-items: center;
-      justify-content: center;
-      color: white;
-      text-align: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 8px 0 24px;
     }
 
-    .container {
-      max-width: 500px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.2px;
     }
 
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: #38bdf8;
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+      display: grid;
+      place-items: center;
+      color: #02131e;
+      font-weight: 900;
+      box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
     }
 
-    h1 {
-      font-size: 40px;
-      margin-bottom: 10px;
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 0.96rem;
     }
 
-    p {
-      color: #94a3b8;
-      margin-bottom: 30px;
+    .nav-links a:hover {
+      color: var(--text);
     }
 
-    .badge {
-      display: inline-block;
-      padding: 8px 16px;
+    .nav-cta {
+      padding: 11px 18px;
       border-radius: 999px;
-      background: rgba(56, 189, 248, 0.15);
-      color: #38bdf8;
-      font-size: 14px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 34px;
+      align-items: center;
+      min-height: calc(100vh - 120px);
+      padding: 30px 0 70px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.16);
+      color: var(--primary);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      line-height: 1.04;
+      letter-spacing: -1.8px;
+      margin-bottom: 18px;
+      max-width: 680px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.06rem;
+      max-width: 620px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 0.96rem;
+      transition: 0.25s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+      color: #03131f;
+      box-shadow: 0 16px 40px rgba(14, 165, 233, 0.28);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 50px rgba(14, 165, 233, 0.35);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      border-color: rgba(148, 163, 184, 0.16);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-2px);
+    }
+
+    .hero-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    .hero-points span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dashboard-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 30px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -30px -40px auto;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.18), transparent 60%);
+      pointer-events: none;
+    }
+
+    .mini-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.12);
+      color: #86efac;
+      border: 1px solid rgba(34, 197, 94, 0.18);
+      font-size: 0.85rem;
+    }
+
+    .grid-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .stat-box,
+    .feature-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .stat-box small {
+      color: var(--muted);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.82rem;
+    }
+
+    .stat-box strong {
+      font-size: 1.45rem;
+      letter-spacing: -0.5px;
+    }
+
+    .panel-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .panel-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .panel-row .left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .panel-row .left b {
+      font-size: 0.95rem;
+    }
+
+    .panel-row .left span,
+    .panel-row .right {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .section {
+      padding: 24px 0 90px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      letter-spacing: -0.9px;
+      margin-bottom: 8px;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      max-width: 650px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+    }
+
+    .feature-tag {
+      display: inline-flex;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.08);
+      color: var(--primary);
+      font-size: 0.8rem;
+      border: 1px solid rgba(56, 189, 248, 0.12);
+    }
+
+    .cta-box {
+      margin-top: 34px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(14, 165, 233, 0.06));
+      border: 1px solid rgba(56, 189, 248, 0.16);
+      border-radius: 28px;
+      padding: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .cta-box h3 {
+      font-size: 1.45rem;
+      margin-bottom: 8px;
+    }
+
+    .cta-box p {
+      color: var(--muted);
+      max-width: 650px;
+    }
+
+    .footer {
+      padding: 10px 0 34px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding-top: 12px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .wrapper {
+        padding: 18px;
+      }
+
+      .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-bottom: 16px;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .hero h1 {
+        letter-spacing: -1px;
+      }
+
+      .grid-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .section,
+      .hero {
+        padding-bottom: 60px;
+      }
+
+      .cta-box,
+      .section-head,
+      .footer {
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="wrapper">
+    <header class="nav">
+      <a href="#home" class="brand">
+        <div class="brand-mark">L</div>
+        <span>Ledge UAE</span>
+      </a>
 
-  <div class="container">
-    <div class="logo">Ledge UAE</div>
-    <h1>Coming Soon</h1>
-    <p>We're working on something great. Stay tuned.</p>
-    <div class="badge">🚀 Launching Soon</div>
+      <nav class="nav-links">
+        <a href="#solutions">Solutions</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a class="nav-cta" href="mailto:hello@ledgeuae.com">Get in Touch</a>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div>
+          <div class="eyebrow">Built for modern operations in the UAE</div>
+          <h1>Run your business operations with more control, clarity, and speed.</h1>
+          <p>
+            Ledge helps teams manage internal workflows, finance operations, real estate processes,
+            and business administration through clean, practical software designed for real work.
+          </p>
+
+          <div class="hero-actions">
+            <a href="mailto:hello@ledgeuae.com" class="btn btn-primary">Request a Demo</a>
+            <a href="#solutions" class="btn btn-secondary">Explore Solutions</a>
+          </div>
+
+          <div class="hero-points">
+            <span>✓ Finance workflows</span>
+            <span>✓ Property operations</span>
+            <span>✓ Internal dashboards</span>
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <div class="mini-top">
+            <span>Ledge Control Center</span>
+            <span class="status-pill">● Systems Active</span>
+          </div>
+
+          <div class="grid-stats">
+            <div class="stat-box">
+              <small>Active Workflows</small>
+              <strong>24</strong>
+            </div>
+            <div class="stat-box">
+              <small>Collections Tracked</small>
+              <strong>AED 128K</strong>
+            </div>
+            <div class="stat-box">
+              <small>Properties Managed</small>
+              <strong>18</strong>
+            </div>
+            <div class="stat-box">
+              <small>Team Efficiency</small>
+              <strong>+32%</strong>
+            </div>
+          </div>
+
+          <div class="panel-list">
+            <div class="panel-row">
+              <div class="left">
+                <b>Rent Collection Monitoring</b>
+                <span>Live payment tracking across units</span>
+              </div>
+              <div class="right">Operational</div>
+            </div>
+
+            <div class="panel-row">
+              <div class="left">
+                <b>Expiry & Reminder Automation</b>
+                <span>License, contract, and document alerts</span>
+              </div>
+              <div class="right">Automated</div>
+            </div>
+
+            <div class="panel-row">
+              <div class="left">
+                <b>Business Admin Dashboards</b>
+                <span>Fast visibility into key activity</span>
+              </div>
+              <div class="right">Live Data</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="solutions">
+        <div class="section-head">
+          <div>
+            <h2>Solutions designed around real operations</h2>
+            <p>
+              Start with a focused system, then expand into a connected platform for daily management,
+              financial tracking, reminders, approvals, and reporting.
+            </p>
+          </div>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <h3>Property Management Workflows</h3>
+            <p>
+              Manage rent collection, notices, cheques, expiry tracking, and occupancy workflows in one place.
+            </p>
+            <span class="feature-tag">Real Estate</span>
+          </article>
+
+          <article class="feature-card">
+            <h3>Finance & Administrative Control</h3>
+            <p>
+              Track transactions, journals, invoices, documents, and operational finance without scattered tools.
+            </p>
+            <span class="feature-tag">Finance Ops</span>
+          </article>
+
+          <article class="feature-card">
+            <h3>Custom Internal Systems</h3>
+            <p>
+              Build tailored dashboards and internal software that match how your company actually works.
+            </p>
+            <span class="feature-tag">Custom Software</span>
+          </article>
+        </div>
+
+        <div class="cta-box" id="about">
+          <div>
+            <h3>From simple landing page to full company website</h3>
+            <p>
+              This page is ready to be expanded with About, Modules, Pricing, Contact Form, client logos,
+              and product screenshots as the next step.
+            </p>
+          </div>
+          <a href="mailto:hello@ledgeuae.com" class="btn btn-primary">Start the Build</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" id="contact">
+      <span>© 2026 Ledge UAE. All rights reserved.</span>
+      <span>hello@ledgeuae.com</span>
+    </footer>
   </div>
-
 </body>
 </html>
