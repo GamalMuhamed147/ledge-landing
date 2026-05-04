@@ -8,7 +8,38 @@ body {
   overflow-x: hidden;
   cursor: auto;
 }
-
+/* ─── SERVICE CARD LINKS (homepage) ───────────────────────── */
+.service-link {
+  color: inherit;
+  text-decoration: none;
+  background-image: linear-gradient(var(--gold), var(--gold));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.35s ease, color 0.25s ease;
+}
+.service-card:hover .service-link {
+  color: var(--gold-lt);
+  background-size: 100% 1px;
+}
+.service-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  transition: gap 0.25s ease, color 0.25s ease;
+}
+.service-cta:hover {
+  color: var(--gold-lt);
+  gap: 0.8rem;
+}
 /* ─── CSS VARIABLES ───────────────────────────────────────────── */
 :root {
   --bg:       #080c14;
