@@ -10,13 +10,15 @@ const navLinks  = document.getElementById('nav-links');
 const navCta    = document.getElementById('nav-cta-btn');
 
 hamburger.addEventListener('click', () => {
-  navLinks.classList.toggle('open');
+  const isOpen = navLinks.classList.toggle('open');
   navCta.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 });
 
 navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
   navLinks.classList.remove('open');
   navCta.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
 }));
 
 /* ─── SCROLL REVEAL ─────────────────────────────────────────── */
@@ -66,17 +68,18 @@ const counterObserver = new IntersectionObserver(entries => {
 document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
 
 /* ─── FORM SUBMIT (WEB3FORMS) ───────────────────────────────── */
-document.getElementById('submit-btn').addEventListener('click', async function (e) {
+const contactForm = document.getElementById('contact-form');
+const submitBtn   = document.getElementById('submit-btn');
+
+async function handleSubmit(e) {
   e.preventDefault();
 
-  const btn = this;
-
-  const nameInput = document.querySelector('input[placeholder="Ahmed Al Mansoori"]');
-  const companyInput = document.querySelector('input[placeholder="Your Company LLC"]');
-  const emailInput = document.querySelector('input[type="email"]');
-  const phoneInput = document.querySelector('input[type="tel"]');
-  const interestSelect = document.querySelector('select');
-  const messageTextarea = document.querySelector('textarea');
+  const nameInput      = document.getElementById('form-name');
+  const companyInput   = document.getElementById('form-company');
+  const emailInput     = document.getElementById('form-email');
+  const phoneInput     = document.getElementById('form-phone');
+  const interestSelect = document.getElementById('form-interest');
+  const messageTextarea= document.getElementById('form-message');
 
   const formData = {
     access_key: "394efb9c-5993-4a88-887f-b67ada3760ef",
@@ -97,8 +100,8 @@ document.getElementById('submit-btn').addEventListener('click', async function (
   }
 
   // Loading state
-  btn.disabled = true;
-  btn.textContent = "Sending...";
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Sending...";
 
   try {
     const res = await fetch("https://api.web3forms.com/submit", {
@@ -113,11 +116,11 @@ document.getElementById('submit-btn').addEventListener('click', async function (
     const data = await res.json();
 
     if (data.success) {
-      btn.textContent = "✓ Request Sent Successfully";
-      btn.style.background = "linear-gradient(135deg,#4a7c4e,#2d5430)";
-      btn.style.color = "#e8f5e9";
+      submitBtn.textContent = "✓ Request Sent Successfully";
+      submitBtn.style.background = "linear-gradient(135deg,#4a7c4e,#2d5430)";
+      submitBtn.style.color = "#e8f5e9";
 
-      // Optional: clear fields after success
+      // Clear fields after success
       nameInput.value = "";
       companyInput.value = "";
       emailInput.value = "";
@@ -128,14 +131,14 @@ document.getElementById('submit-btn').addEventListener('click', async function (
       throw new Error(data.message || "Submission failed");
     }
   } catch (err) {
-    btn.textContent = "Error — Try Again";
-    btn.style.background = "#8b2c2c";
-    btn.style.color = "#ffffff";
+    submitBtn.textContent = "Error — Try Again";
+    submitBtn.style.background = "#8b2c2c";
+    submitBtn.style.color = "#ffffff";
     console.error("Web3Forms error:", err);
   }
 
   setTimeout(() => {
-    btn.innerHTML = `
+    submitBtn.innerHTML = `
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
            stroke="currentColor" stroke-width="2.5"
            stroke-linecap="round" stroke-linejoin="round">
@@ -143,11 +146,19 @@ document.getElementById('submit-btn').addEventListener('click', async function (
       </svg>
       Request Your Free Demo
     `;
-    btn.disabled = false;
-    btn.style.background = "";
-    btn.style.color = "";
+    submitBtn.disabled = false;
+    submitBtn.style.background = "";
+    submitBtn.style.color = "";
   }, 4000);
-});
+}
+
+if (contactForm) {
+  contactForm.addEventListener('submit', handleSubmit);
+}
+if (submitBtn) {
+  // Backup click handler in case the form element isn't picked up
+  submitBtn.addEventListener('click', handleSubmit);
+}
 
 /* ─── HERO ORB PARALLAX ─────────────────────────────────────── */
 document.addEventListener('mousemove', e => {
