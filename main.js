@@ -1,172 +1,170 @@
-/* ─── NAV SCROLL ───────────────────────────────────────────── */
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-});
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* ─── MOBILE NAV ────────────────────────────────────────────── */
-const hamburger = document.getElementById('hamburger');
-const navLinks  = document.getElementById('nav-links');
-const navCta    = document.getElementById('nav-cta-btn');
-
-hamburger.addEventListener('click', () => {
-  const isOpen = navLinks.classList.toggle('open');
-  navCta.classList.toggle('open');
-  hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-});
-
-navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  navLinks.classList.remove('open');
-  navCta.classList.remove('open');
-  hamburger.setAttribute('aria-expanded', 'false');
-}));
-
-/* ─── SCROLL REVEAL ─────────────────────────────────────────── */
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) e.target.classList.add('visible');
-  });
-}, { threshold: 0.12 });
-
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-/* ─── COUNTER ANIMATION ─────────────────────────────────────── */
-function animateCounter(el, target, suffix = '') {
-  let begin = null;
-  const dur = 1800;
-
-  const step = ts => {
-    if (!begin) begin = ts;
-    const p = Math.min((ts - begin) / dur, 1);
-    const ease = 1 - Math.pow(1 - p, 3);
-
-    el.textContent = Math.floor(ease * target) + suffix;
-
-    if (p < 1) {
-      requestAnimationFrame(step);
-    } else {
-      el.textContent = target + suffix;
-    }
-  };
-
-  requestAnimationFrame(step);
-}
-
-const counterObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const el = e.target;
-      const target = parseInt(el.dataset.count, 10);
-      const suffix = el.dataset.count === '100' ? '%+' : '+';
-
-      animateCounter(el, target, suffix);
-      counterObserver.unobserve(el);
-    }
-  });
-}, { threshold: 0.5 });
-
-document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
-
-/* ─── FORM SUBMIT (WEB3FORMS) ───────────────────────────────── */
-const contactForm = document.getElementById('contact-form');
-const submitBtn   = document.getElementById('submit-btn');
-
-async function handleSubmit(e) {
-  e.preventDefault();
-
-  const nameInput      = document.getElementById('form-name');
-  const companyInput   = document.getElementById('form-company');
-  const emailInput     = document.getElementById('form-email');
-  const phoneInput     = document.getElementById('form-phone');
-  const interestSelect = document.getElementById('form-interest');
-  const messageTextarea= document.getElementById('form-message');
-
-  const formData = {
-    access_key: "394efb9c-5993-4a88-887f-b67ada3760ef",
-    subject: "New Ledge Lead",
-    from_name: "Ledge Website",
-    name: nameInput.value.trim(),
-    company: companyInput.value.trim(),
-    email: emailInput.value.trim(),
-    phone: phoneInput.value.trim(),
-    interest: interestSelect.value,
-    message: messageTextarea.value.trim(),
-  };
-
-  // Basic validation
-  if (!formData.name || !formData.email) {
-    alert("Please enter your name and email.");
-    return;
+  /* ---------- scroll progress + header state ---------- */
+  var progress = document.getElementById('progress');
+  var header = document.getElementById('siteHeader');
+  function onScroll(){
+    var h = document.documentElement;
+    var scrollTop = h.scrollTop || document.body.scrollTop;
+    var scrollH = h.scrollHeight - h.clientHeight;
+    progress.style.width = (scrollH > 0 ? (scrollTop/scrollH*100) : 0) + '%';
+    header.classList.toggle('scrolled', scrollTop > 40);
   }
+  document.addEventListener('scroll', function(){ requestAnimationFrame(onScroll); }, { passive:true });
+  onScroll();
 
-  // Loading state
-  submitBtn.disabled = true;
-  submitBtn.textContent = "Sending...";
-
-  try {
-    const res = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(formData),
+  /* ---------- reveal on scroll ---------- */
+  var revealEls = document.querySelectorAll('.reveal, .reveal-stagger, .bracket');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in-view'); }
     });
+  }, { threshold:0.16 });
+  revealEls.forEach(function(el){ io.observe(el); });
 
-    const data = await res.json();
+  /* ---------- count-up stats ---------- */
+  var counters = document.querySelectorAll('.count');
+  var countIo = new IntersectionObserver(function(entries, obs){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      var el = entry.target;
+      var target = parseFloat(el.getAttribute('data-target'));
+      var divide = parseFloat(el.getAttribute('data-divide')) || 1;
+      var decimals = parseInt(el.getAttribute('data-decimals')) || 0;
+      var duration = reduceMotion ? 1 : 1600;
+      var start = null;
+      function step(ts){
+        if(start === null) start = ts;
+        var p = Math.min((ts - start)/duration, 1);
+        var eased = 1 - Math.pow(1-p, 3);
+        var val = (target/divide) * eased;
+        el.textContent = val.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        if(p < 1){ requestAnimationFrame(step); }
+      }
+      requestAnimationFrame(step);
+      obs.unobserve(el);
+    });
+  }, { threshold:0.5 });
+  counters.forEach(function(el){ countIo.observe(el); });
 
-    if (data.success) {
-      submitBtn.textContent = "✓ Request Sent Successfully";
-      submitBtn.style.background = "linear-gradient(135deg,#4a7c4e,#2d5430)";
-      submitBtn.style.color = "#e8f5e9";
+  /* ---------- generic carousel (peek slider: screens + dots, autoplay, swipe) ---------- */
+  document.querySelectorAll('.carousel').forEach(function(car){
+    var frameBody = car.querySelector('.frame-body');
+    var track = car.querySelector('.carousel-track');
+    var screens = car.querySelectorAll('.screen');
+    if(!screens.length || !track) return;
+    var dotsWrap = car.querySelector('.carousel-dots');
+    var idx = 0;
+    var interval = parseInt(car.getAttribute('data-interval')) || 3000;
+    var timer = null;
+    /* screen width/gap come from CSS (.screen{ flex:0 0 92%; margin-right:3%; }) —
+       JS only reads the resulting box size to compute the slide offset, it never
+       sets explicit pixel widths (that previously caused the frame to blow out). */
 
-      // Clear fields after success
-      nameInput.value = "";
-      companyInput.value = "";
-      emailInput.value = "";
-      phoneInput.value = "";
-      interestSelect.value = "";
-      messageTextarea.value = "";
-    } else {
-      throw new Error(data.message || "Submission failed");
+    screens.forEach(function(s, i){
+      var d = document.createElement('button');
+      d.className = 'cdot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Show screen ' + (i+1));
+      d.addEventListener('click', function(){ go(i); reset(); });
+      dotsWrap.appendChild(d);
+    });
+    var dots = dotsWrap.querySelectorAll('.cdot');
+
+    function layout(){ position(false); }
+
+    function position(animate){
+      var first = screens[0];
+      var step = first.offsetWidth + (parseFloat(getComputedStyle(first).marginRight) || 0);
+      track.style.transition = animate ? '' : 'none';
+      track.style.transform = 'translateX(-' + (idx * step) + 'px)';
+      if(!animate){ void track.offsetHeight; track.style.transition = ''; }
     }
-  } catch (err) {
-    submitBtn.textContent = "Error — Try Again";
-    submitBtn.style.background = "#8b2c2c";
-    submitBtn.style.color = "#ffffff";
-    console.error("Web3Forms error:", err);
-  }
 
-  setTimeout(() => {
-    submitBtn.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="2.5"
-           stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
-      </svg>
-      Request Your Free Demo
-    `;
-    submitBtn.disabled = false;
-    submitBtn.style.background = "";
-    submitBtn.style.color = "";
-  }, 4000);
-}
+    function go(i){
+      screens[idx].classList.remove('active');
+      dots[idx].classList.remove('active');
+      idx = (i + screens.length) % screens.length;
+      screens[idx].classList.add('active');
+      dots[idx].classList.add('active');
+      position(true);
+    }
+    function next(){ go(idx + 1); }
+    function start(){ if(reduceMotion) return; timer = setInterval(next, interval); }
+    function stop(){ if(timer){ clearInterval(timer); timer = null; } }
+    function reset(){ stop(); start(); }
 
-if (contactForm) {
-  contactForm.addEventListener('submit', handleSubmit);
-}
-if (submitBtn) {
-  // Backup click handler in case the form element isn't picked up
-  submitBtn.addEventListener('click', handleSubmit);
-}
+    car.addEventListener('mouseenter', stop);
+    car.addEventListener('mouseleave', start);
 
-/* ─── HERO ORB PARALLAX ─────────────────────────────────────── */
-document.addEventListener('mousemove', e => {
-  const x = (e.clientX / window.innerWidth - 0.5) * 20;
-  const y = (e.clientY / window.innerHeight - 0.5) * 20;
+    window.addEventListener('resize', layout);
+    layout();
 
-  document.querySelectorAll('.hero-orb').forEach((orb, i) => {
-    const factor = (i + 1) * 0.4;
-    orb.style.transform = `translate(${x * factor}px, ${y * factor}px)`;
+    /* touch swipe */
+    var touchX = null;
+    car.addEventListener('touchstart', function(e){ touchX = e.touches[0].clientX; stop(); }, { passive:true });
+    car.addEventListener('touchend', function(e){
+      if(touchX === null) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      if(Math.abs(dx) > 40){ dx < 0 ? go(idx+1) : go(idx-1); }
+      touchX = null;
+      start();
+    }, { passive:true });
+
+    start();
   });
-});
+
+  /* ---------- testimonial slider ---------- */
+  var testiSlides = document.querySelectorAll('.testi-slide');
+  var testiDotsWrap = document.getElementById('testiDots');
+  var tIdx = 0;
+  testiSlides.forEach(function(s, i){
+    var d = document.createElement('button');
+    d.className = 'cdot' + (i === 0 ? ' active' : '');
+    d.style.background = i === 0 ? 'var(--crimson)' : 'rgba(42,29,21,0.18)';
+    d.addEventListener('click', function(){ tGo(i); tReset(); });
+    testiDotsWrap.appendChild(d);
+  });
+  var tDots = testiDotsWrap.querySelectorAll('.cdot');
+  function tGo(i){
+    testiSlides[tIdx].classList.remove('active');
+    tDots[tIdx].classList.remove('active');
+    tDots[tIdx].style.background = 'rgba(42,29,21,0.18)';
+    tIdx = (i + testiSlides.length) % testiSlides.length;
+    testiSlides[tIdx].classList.add('active');
+    tDots[tIdx].classList.add('active');
+    tDots[tIdx].style.background = 'var(--crimson)';
+  }
+  var tTimer = null;
+  function tStart(){ if(reduceMotion) return; tTimer = setInterval(function(){ tGo(tIdx+1); }, 5000); }
+  function tStop(){ if(tTimer){ clearInterval(tTimer); tTimer = null; } }
+  function tReset(){ tStop(); tStart(); }
+  document.getElementById('testiWrap').addEventListener('mouseenter', tStop);
+  document.getElementById('testiWrap').addEventListener('mouseleave', tStart);
+  tStart();
+
+  /* ---------- FAQ accordion ---------- */
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    var btn = item.querySelector('.faq-q');
+    var wrap = item.querySelector('.faq-a-wrap');
+    btn.addEventListener('click', function(){
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(openItem){
+        if(openItem !== item){
+          openItem.classList.remove('open');
+          openItem.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+          openItem.querySelector('.faq-a-wrap').style.maxHeight = null;
+        }
+      });
+      if(isOpen){
+        item.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        wrap.style.maxHeight = null;
+      } else {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        wrap.style.maxHeight = wrap.scrollHeight + 'px';
+      }
+    });
+  });
+})();
